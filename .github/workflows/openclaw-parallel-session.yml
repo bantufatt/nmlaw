@@ -35,12 +35,14 @@ jobs:
           - id: "bot1"
             name: "Bot 1 (@anugclawd_bot)"
             token_secret: "TELEGRAM_BOT_TOKEN_1"
+            model_key_secret: "NVIDIA_API_KEY_1"
             config_secret: "OPENCLAW_CONFIG_1"
             auth_secret: "OPENCLAW_AUTH_PROFILES_1"
             artifact_name: "openclaw-workspace-bot1"
           - id: "bot2"
             name: "Bot 2 (@second_bot)"
             token_secret: "TELEGRAM_BOT_TOKEN_2"
+            model_key_secret: "NVIDIA_API_KEY_2"
             config_secret: "OPENCLAW_CONFIG_2"
             auth_secret: "OPENCLAW_AUTH_PROFILES_2"
             artifact_name: "openclaw-workspace-bot2"
@@ -194,6 +196,7 @@ jobs:
           OPENCLAW_CONFIG: ${{ secrets[matrix.bot.config_secret] || secrets.OPENCLAW_CONFIG }}
           OPENCLAW_AUTH_PROFILES: ${{ secrets[matrix.bot.auth_secret] || secrets.OPENCLAW_AUTH_PROFILES }}
           TELEGRAM_BOT_TOKEN: ${{ secrets[matrix.bot.token_secret] || secrets.TELEGRAM_BOT_TOKEN }}
+          NVIDIA_API_KEY: ${{ secrets[matrix.bot.model_key_secret] || secrets.NVIDIA_API_KEY }}
         run: |
           OPENCLAW_DIR="$HOME/.openclaw"
           mkdir -p "$OPENCLAW_DIR"
@@ -366,6 +369,7 @@ jobs:
       - name: Start OpenClaw gateway
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets[matrix.bot.token_secret] || secrets.TELEGRAM_BOT_TOKEN }}
+          NVIDIA_API_KEY: ${{ secrets[matrix.bot.model_key_secret] || secrets.NVIDIA_API_KEY }}
         run: |
           export NPM_CONFIG_PREFIX="$HOME/.npm-global"
           export PATH="$HOME/.npm-global/bin:$PATH"
