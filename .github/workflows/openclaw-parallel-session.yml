@@ -199,6 +199,8 @@ jobs:
           OPENCLAW_AUTH_PROFILES: ${{ secrets[matrix.bot.auth_secret] || secrets.OPENCLAW_AUTH_PROFILES }}
           TELEGRAM_BOT_TOKEN: ${{ secrets[matrix.bot.token_secret] || secrets.TELEGRAM_BOT_TOKEN }}
           NVIDIA_API_KEY: ${{ secrets[matrix.bot.model_key_secret] || secrets.NVIDIA_API_KEY }}
+          NVIDIA_API_KEY_2: ${{ secrets.NVIDIA_API_KEY_2 }}
+          NVIDIA_API_KEY_3: ${{ secrets.NVIDIA_API_KEY_3 }}
         run: |
           OPENCLAW_DIR="$HOME/.openclaw"
           mkdir -p "$OPENCLAW_DIR"
@@ -392,6 +394,8 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets[matrix.bot.token_secret] || secrets.TELEGRAM_BOT_TOKEN }}
           NVIDIA_API_KEY: ${{ secrets[matrix.bot.model_key_secret] || secrets.NVIDIA_API_KEY }}
+          NVIDIA_API_KEY_2: ${{ secrets.NVIDIA_API_KEY_2 }}
+          NVIDIA_API_KEY_3: ${{ secrets.NVIDIA_API_KEY_3 }}
         run: |
           export NPM_CONFIG_PREFIX="$HOME/.npm-global"
           export PATH="$HOME/.npm-global/bin:$PATH"
