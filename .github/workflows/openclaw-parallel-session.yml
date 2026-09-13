@@ -26,7 +26,7 @@ env:
 jobs:
   openclaw-session:
     name: OpenClaw (${{ matrix.bot.name }})
-    
+    runs-on: ubuntu-latest
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -142,7 +142,7 @@ jobs:
 
           if [ "$CACHE_WORKING" = "false" ]; then
             echo "Installing openclaw@latest fresh..."
-            npm install -g openclaw@latest --allow-scripts=openclaw
+            npm install -g openclaw@latest --allow-scripts=openclaw,@google/genai,koffi,tree-sitter-bash,protobufjs
           fi
 
       - name: Install CloakBrowser for browser control
