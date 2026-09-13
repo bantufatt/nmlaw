@@ -100,7 +100,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24'
 
       # ========== CACHING ==========
       - name: Restore npm global packages cache
@@ -142,7 +142,7 @@ jobs:
 
           if [ "$CACHE_WORKING" = "false" ]; then
             echo "Installing openclaw@latest fresh..."
-            npm install -g openclaw@latest
+            npm install -g openclaw@latest --allow-scripts=openclaw
           fi
 
       - name: Install CloakBrowser for browser control
