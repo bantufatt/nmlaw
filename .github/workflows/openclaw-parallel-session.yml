@@ -26,7 +26,7 @@ env:
 jobs:
   openclaw-session:
     name: OpenClaw (${{ matrix.bot.name }})
-    
+    runs-on: ubuntu-latest
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -49,7 +49,7 @@ jobs:
 
     concurrency:
       group: openclaw-parallel-${{ matrix.bot.id }}
-      cancel-in-progress: false
+      cancel-in-progress: true
 
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -624,8 +624,8 @@ jobs:
               LAST_SAVE=$(date +%s)
             fi
 
-            # Chain check
-            if [ "$CHAIN_TRIGGERED" = "false" ] && [ "$(date +%s)" -ge "$CHAIN_TIME" ]; then
+            # Chain check — only bot1 triggers the chain dispatch to avoid duplicate workflow runs
+            if [ "$CHAIN_TRIGGERED" = "false" ] && [ "$(date +%s)" -ge "$CHAIN_TIME" ] && [ "${{ matrix.bot.id }}" = "bot1" ]; then
               save_secrets
               if trigger_chain; then
                 CHAIN_TRIGGERED=true
@@ -710,7 +710,7 @@ jobs:
           overwrite: true
 
       - name: Trigger next session (fallback)
-        if: always()
+        if: ${{ always() && matrix.bot.id == 'bot1' }}
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
